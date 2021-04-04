@@ -1,20 +1,26 @@
 package ru.rsreu.Chistyakov0518.credits;
 
+/**
+ * Interest rate accrual class for consumer loans
+ * 
+ * @author Chistyakov Pavel
+ *
+ */
 public class DividingConsumerLoanAmountParametersOfferedBank {
 	/**
-	 * 
+	 * Amount Range Boundary Fields
 	 */
 	private double lowBordHighLoanSumRange;
 	private double lowBordMiddleLoanSumRange;
 	/**
-	 * 
+	 * Loan rates selected depending on the amount
 	 */
 	private double highRangeRate;
 	private double middleRangeRate;
 	private double lowRangeRate;
 
-	public DividingConsumerLoanAmountParametersOfferedBank(double lowBordHighLoanSumRange, double lowBordMiddleLoanSumRange,
-			double highRangeRate, double middleRangeRate, double lowRangeRate) {
+	public DividingConsumerLoanAmountParametersOfferedBank(double lowBordHighLoanSumRange,
+			double lowBordMiddleLoanSumRange, double highRangeRate, double middleRangeRate, double lowRangeRate) {
 		super();
 		this.lowBordHighLoanSumRange = lowBordHighLoanSumRange;
 		this.lowBordMiddleLoanSumRange = lowBordMiddleLoanSumRange;

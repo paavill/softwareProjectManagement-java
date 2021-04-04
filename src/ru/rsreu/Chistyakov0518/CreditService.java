@@ -13,16 +13,14 @@ import ru.rsreu.Chistyakov0518.credits.PaymentInformation;
  *
  */
 public class CreditService {
-	/**
-	 * 
-	 */
+
 	private static final int TO_PERCENT_CONVERT_COEFFICIENT = 100;
 	/**
-	 * 
+	 * Constant for formatting payout history data
 	 */
-	private static final String FORMAT = "%4d %15.2f %3.1f %9.2f %9.2f %12.2f";
+	private static final String DATA_FORMAT = "%4d %15.2f %3.1f %9.2f %9.2f %12.2f";
 	/**
-	 * 
+	 * Constant for formatting the title of the payout history table
 	 */
 	private static final String HANDLE_FORMAT = "%4s %15s %3s %9s %9s %12s";
 
@@ -31,9 +29,10 @@ public class CreditService {
 	}
 
 	/**
+	 * The method converts the history of loan payments into a formatted string
 	 * 
 	 * @param credit
-	 * @return
+	 * @return formatted string with information
 	 */
 	public static String getFormatCreditPaymentHistory(Credit credit) {
 		PaymentInformation[] paymentHistory = credit.getPaymentHistory();
@@ -45,7 +44,7 @@ public class CreditService {
 					Resourcer.getString("messages.output.titles.bodyPart"),
 					Resourcer.getString("messages.output.titles.percentPart"))).append("\n");
 			for (int i = 0; i < credit.getPaymentsNumber(); i++) {
-				result.append(String.format(CreditService.FORMAT, paymentHistory[i].getPaymentNumber(),
+				result.append(String.format(CreditService.DATA_FORMAT, paymentHistory[i].getPaymentNumber(),
 						paymentHistory[i].getLoanSum(),
 						(float) (paymentHistory[i].getLoanRate() * CreditService.TO_PERCENT_CONVERT_COEFFICIENT),
 						paymentHistory[i].getPaymentAmount(), paymentHistory[i].getLoanPartPaymentAmount(),
@@ -60,9 +59,10 @@ public class CreditService {
 	}
 
 	/**
+	 * The method converts loan information into a formatted string
 	 * 
 	 * @param credit
-	 * @return
+	 * @return formatted string with information
 	 */
 	public static String getFormatCreditInformation(Credit credit) {
 		StringBuilder result = new StringBuilder();
@@ -78,6 +78,7 @@ public class CreditService {
 	}
 
 	/**
+	 * Sorts the array
 	 * 
 	 * @param credits
 	 */
@@ -86,10 +87,12 @@ public class CreditService {
 	}
 
 	/**
+	 * Finds the required loan from an array of loans, in case the loan is not
+	 * found, it returns NULL_CREDIT
 	 * 
 	 * @param credits
 	 * @param searchingCredit
-	 * @return
+	 * @return required credit
 	 */
 	public static Credit searchCredit(Credit[] credits, Credit searchingCredit) {
 		int result = Arrays.binarySearch(credits, searchingCredit);
@@ -102,8 +105,11 @@ public class CreditService {
 
 	/**
 	 * 
+	 * The method converts all information about the loan (payment history and basic
+	 * parameters) into a formatted string
+	 * 
 	 * @param credit
-	 * @return
+	 * @return formatted string with information
 	 */
 	public static String getAllCreditInformation(Credit credit) {
 		StringBuilder result = new StringBuilder();

@@ -5,6 +5,12 @@ import com.prutzkow.resourcer.Resourcer;
 import ru.rsreu.Chistyakov0518.credits.*;
 import ru.rsreu.Chistyakov0518.credits.exceptions.*;
 
+/**
+ * Class differentiated loan provided by Sber Bank
+ * 
+ * @author Chistyakov Pavel
+ *
+ */
 public class SberBankDifferentiatedConsumerCredit extends ConsumerCredit {
 	private static final String BANK_NAME = Resourcer.getString("banks.name.sberBank");;
 	private static final String CREDIT_TYPE = Resourcer.getString("banks.creditTypes.differentiated");

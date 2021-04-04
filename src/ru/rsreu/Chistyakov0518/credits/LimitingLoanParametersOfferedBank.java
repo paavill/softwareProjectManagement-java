@@ -1,17 +1,19 @@
 package ru.rsreu.Chistyakov0518.credits;
 
+/**
+ * Class of restrictions for loans of various types
+ * 
+ * @author Chistyakov Pavel
+ *
+ */
 public class LimitingLoanParametersOfferedBank {
-	/**
-	 * 
-	 */
+
 	private double maxLoanSum;
 	private double minLoanSum;
-	/**
-	 * 
-	 */
+
 	private int minLoanDuration;
 	private int maxLoanDuration;
-	
+
 	public LimitingLoanParametersOfferedBank(double maxLoanSum, double minLoanSum, int minLoanDuration,
 			int maxLoanDuration) {
 		this.maxLoanSum = maxLoanSum;
@@ -19,7 +21,7 @@ public class LimitingLoanParametersOfferedBank {
 		this.minLoanDuration = minLoanDuration;
 		this.maxLoanDuration = maxLoanDuration;
 	}
-	
+
 	protected double getMaxLoanSum() {
 		return maxLoanSum;
 	}

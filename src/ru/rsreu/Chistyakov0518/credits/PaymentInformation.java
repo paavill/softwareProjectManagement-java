@@ -1,5 +1,11 @@
 package ru.rsreu.Chistyakov0518.credits;
 
+/**
+ * Class for storing and retrieving payment information
+ * 
+ * @author Chistyakov Pavel
+ *
+ */
 public class PaymentInformation {
 	private final double loanSum;
 	private final int loanDuration;

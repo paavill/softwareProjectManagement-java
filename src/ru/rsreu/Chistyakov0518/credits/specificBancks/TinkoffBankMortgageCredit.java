@@ -5,6 +5,12 @@ import com.prutzkow.resourcer.Resourcer;
 import ru.rsreu.Chistyakov0518.credits.*;
 import ru.rsreu.Chistyakov0518.credits.exceptions.*;
 
+/**
+ * Class a mortgage loan provided by Tinkoff Bank
+ * 
+ * @author Chistyakov Pavel
+ *
+ */
 public class TinkoffBankMortgageCredit extends MortgageCredit {
 	private static final String BANK_NAME = Resourcer.getString("banks.name.tinkoff");;
 	private static final String CREDIT_TYPE = Resourcer.getString("banks.creditTypes.mortgage");

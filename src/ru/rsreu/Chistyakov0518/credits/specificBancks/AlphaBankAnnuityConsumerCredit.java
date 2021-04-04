@@ -4,6 +4,12 @@ import com.prutzkow.resourcer.Resourcer;
 
 import ru.rsreu.Chistyakov0518.credits.*;
 
+/**
+ * Class annuity loan provided by Alfa Bank
+ * 
+ * @author Chistyakov Pavel
+ *
+ */
 public class AlphaBankAnnuityConsumerCredit extends ConsumerCredit {
 	private static final String BANK_NAME = Resourcer.getString("banks.name.alphaBank");
 	private static final String CREDIT_TYPE = Resourcer.getString("banks.creditTypes.Annuity");
