@@ -7,6 +7,11 @@ import com.prutzkow.resourcer.Resourcer;
 import ru.rsreu.Chistyakov0518.credits.Credit;
 import ru.rsreu.Chistyakov0518.credits.PaymentInformation;
 
+/**
+ * 
+ * @author Chistyakov Pavel
+ *
+ */
 public class CreditService {
 	/**
 	 * 
