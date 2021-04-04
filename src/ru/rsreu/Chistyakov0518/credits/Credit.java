@@ -176,8 +176,8 @@ public abstract class Credit implements Comparable<Credit> {
 
 	@Override
 	public int compareTo(Credit o) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = ((Double) this.loanRate).compareTo(o.loanRate);
+		return result;
 	}
 
 	public final PaymentInformation[] getPaymentHistory() {

@@ -1,5 +1,7 @@
 package ru.rsreu.Chistyakov0518;
 
+import java.util.Arrays;
+
 import com.prutzkow.resourcer.Resourcer;
 
 import ru.rsreu.Chistyakov0518.credits.Credit;
@@ -68,6 +70,29 @@ public class CreditService {
 				.append(Resourcer.getString("messages.output.titles.loanSum")).append(credit.getLoanSum()).append("\n")
 				.append(Resourcer.getString("messages.output.titles.state")).append(credit.getState()).append("\n");
 		return result.toString();
+	}
+
+	/**
+	 * 
+	 * @param credits
+	 */
+	public static void sortCreditsByRate(Credit[] credits) {
+		Arrays.sort(credits);
+	}
+
+	/**
+	 * 
+	 * @param credits
+	 * @param searchingCredit
+	 * @return
+	 */
+	public static Credit searchCredit(Credit[] credits, Credit searchingCredit) {
+		int result = Arrays.binarySearch(credits, searchingCredit);
+		if (result >= 0) {
+			return credits[result];
+		} else {
+			return Credit.NULL_CREDIT;
+		}
 	}
 
 	/**
