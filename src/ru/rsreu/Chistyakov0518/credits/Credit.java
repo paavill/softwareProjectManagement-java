@@ -11,7 +11,7 @@ import ru.rsreu.Chistyakov0518.credits.exceptions.*;
  */
 public abstract class Credit implements Comparable<Credit> {
 	/**
-	 * 
+	 * NullObject pattern implementation
 	 */
 	public static final Credit NULL_CREDIT = new Credit() {
 		@Override

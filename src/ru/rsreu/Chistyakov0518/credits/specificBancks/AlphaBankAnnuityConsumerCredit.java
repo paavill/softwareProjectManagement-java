@@ -13,24 +13,16 @@ import ru.rsreu.Chistyakov0518.credits.*;
 public class AlphaBankAnnuityConsumerCredit extends ConsumerCredit {
 	private static final String BANK_NAME = Resourcer.getString("banks.name.alphaBank");
 	private static final String CREDIT_TYPE = Resourcer.getString("banks.creditTypes.Annuity");
-	/**
-	 * 
-	 */
+
 	private static final int DEFAULT_MAX_LOAN_DURATION = 60;
 	private static final int DEFAULT_MIN_LOAN_DURATION = 12;
-	/**
-	 * 
-	 */
+
 	private static final double DEFAULT_MAX_LOAN_SUM = 5e6;
 	private static final double DEFAULT_MIN_LOAN_SUM = 5e4;
-	/**
-	 * 
-	 */
+
 	private static final double DEFAULT_LOW_BORD_HIGH_LOAN_SUM_RANGE = 1.3e6;
 	private static final double DEFAULT_LOW_BORD_MIDDLE_LOAN_SUM_RANGE = 1.6e5;
-	/**
-	 * 
-	 */
+
 	private static final double DEFAULT_HIGH_RANGE_RATE = 0.055;
 	private static final double DEFAULT_MIDDLE_RANGE_RATE = 0.065;
 	private static final double DEFAULT_LOW_RANGE_RATE = 0.07;
