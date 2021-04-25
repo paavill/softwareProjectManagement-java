@@ -26,9 +26,9 @@ public class ApplicationRunner {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.US);
 		StringBuilder processResult = new StringBuilder();
-		Credit[] bankOfferts = CreditInitializer.initializeCredits();
+		AbstractCredit[] bankOfferts = SpecificBanksCreditsInitializer.initializeCredits();
 
-		for (Credit credit : bankOfferts) {
+		for (AbstractCredit credit : bankOfferts) {
 			try {
 				processResult.append(Resourcer.getString("messages.output.beforePayments")).append("\n");
 				processResult.append(CreditService.getAllCreditInformation(credit)).append("\n");
@@ -44,12 +44,12 @@ public class ApplicationRunner {
 				e.printStackTrace();
 			}
 		}
-		Credit searchResult = CreditService.searchCredit(bankOfferts, CreditInitializer.getCreditToSearch());
+		AbstractCredit searchResult = CreditService.searchCredit(bankOfferts, SpecificBanksCreditsInitializer.getCreditToSearch());
 		processResult.append(Resourcer.getString("messages.output.requiredLoan")).append("\n");
 		processResult.append(CreditService.getFormatCreditInformation(searchResult)).append("\n");
 		CreditService.sortCreditsByRate(bankOfferts);
 		processResult.append(Resourcer.getString("messages.output.sortByRateCredit")).append("\n");
-		for (Credit credit : bankOfferts) {
+		for (AbstractCredit credit : bankOfferts) {
 			processResult.append(CreditService.getFormatCreditInformation(credit)).append("\n");
 		}
 		System.out.print(processResult);

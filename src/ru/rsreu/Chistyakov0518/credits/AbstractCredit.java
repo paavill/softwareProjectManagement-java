@@ -2,6 +2,7 @@ package ru.rsreu.Chistyakov0518.credits;
 
 import com.prutzkow.resourcer.Resourcer;
 
+import ru.rsreu.Chistyakov0518.Bank;
 import ru.rsreu.Chistyakov0518.credits.exceptions.*;
 
 /**
@@ -9,34 +10,45 @@ import ru.rsreu.Chistyakov0518.credits.exceptions.*;
  * @author Chistyakov Pavel
  *
  */
-public abstract class Credit implements Comparable<Credit> {
+public abstract class AbstractCredit implements Comparable<AbstractCredit> {
+
 	/**
 	 * NullObject pattern implementation
 	 */
-	public static final Credit NULL_CREDIT = new Credit() {
+	public static final AbstractCredit NULL_CREDIT = new AbstractCredit() {
+
 		@Override
-		public String getBankName() {
-			return "";
+		public int compareTo(AbstractCredit o) {
+			return 0;
 		}
 
 		@Override
-		public String getCreditType() {
-			return "";
+		public double calculateMonthPaymentAmount() {
+			return 0;
 		}
 
 		@Override
-		public int compareTo(Credit o) {
+		protected double calculateLoanRemainingSum(double paymentSum) {
+			// TODO Auto-generated method stub
 			return 0;
 		}
 
 	};
+
 	private static final int YEAR_TO_MONTHS_COEFFICIENT = 12;
+
+	private final String creditType;
 
 	/**
 	 * The field stores the status of the loan, if the loan is open - true, if
 	 * closed - false
 	 */
 	private boolean isOpen = true;
+
+	/**
+	 * The field that stores the object of the bank that issued the loan
+	 */
+	private Bank loanProvider;
 
 	/**
 	 * The amount for which a loan is taken
@@ -71,10 +83,9 @@ public abstract class Credit implements Comparable<Credit> {
 	/**
 	 * Limiting parameters specific to all loans
 	 */
-	private LimitingLoanParametersOfferedBank limitParameters;
 
-	private Credit() {
-
+	private AbstractCredit() {
+		this.creditType = "null";
 	}
 
 	/**
@@ -82,11 +93,18 @@ public abstract class Credit implements Comparable<Credit> {
 	 * @param loanSum
 	 * @param loanDuration
 	 */
-	public Credit(double loanSum, int loanDuration) {
+	public AbstractCredit(double loanSum, int loanDuration, Bank loanProvider, String type) {
+		this.loanProvider = loanProvider;
+		this.creditType = type;
+		this.loanRate = loanProvider.getLoanRate();
 		this.loanSum = loanSum;
 		this.loanDuration = loanDuration;
 		this.paymentHistory = new PaymentInformation[loanDuration];
 		this.paymentsNumber = 0;
+	}
+
+	protected static final int getYearToMonthsCoefficient() {
+		return AbstractCredit.YEAR_TO_MONTHS_COEFFICIENT;
 	}
 
 	public double getMonthlyPayment() {
@@ -97,60 +115,32 @@ public abstract class Credit implements Comparable<Credit> {
 		this.monthlyPayment = monthlyPayment;
 	}
 
-	protected void setClose() {
-		this.isOpen = false;
-	}
-
-	public boolean getState() {
+	public final boolean getState() {
 		return this.isOpen;
 	}
 
-	public int getPaymentsNumber() {
+	public final int getPaymentsNumber() {
 		return paymentsNumber;
 	}
 
-	protected void setPaymentsNumber(int paymentsNumber) {
-		this.paymentsNumber = paymentsNumber;
-	}
-
-	protected void setPaymentInformation(int paymentNumber, PaymentInformation information) {
-		this.paymentHistory[paymentNumber] = information;
+	public final Bank getLoanProvider() {
+		return loanProvider;
 	}
 
 	public final PaymentInformation[] getPaymentHistory() {
 		return this.paymentHistory;
 	}
 
-	public double getLoanSum() {
+	public final double getLoanSum() {
 		return loanSum;
 	}
 
-	protected void setLoanSum(double loanSum) {
-		this.loanSum = loanSum;
-	}
-
-	public int getLoanDuration() {
+	public final int getLoanDuration() {
 		return loanDuration;
 	}
 
-	protected void setLoanDuration(int duration) {
-		this.loanDuration = duration;
-	}
-
-	public double getLoanRate() {
-		return loanRate;
-	}
-
-	protected void setLoanRate(double loanRate) {
-		this.loanRate = loanRate;
-	}
-
-	protected LimitingLoanParametersOfferedBank getLimitParameters() {
-		return limitParameters;
-	}
-
-	protected void setLimitParameters(LimitingLoanParametersOfferedBank limitParameters) {
-		this.limitParameters = limitParameters;
+	public String getCreditType() {
+		return this.creditType;
 	}
 
 	/**
@@ -158,49 +148,15 @@ public abstract class Credit implements Comparable<Credit> {
 	 * 
 	 * @return monthly loan payment
 	 */
-	public double calculateMonthPaymentAmount() {
-		double monthLoanRate = this.getLoanRate() / Credit.YEAR_TO_MONTHS_COEFFICIENT;
-		double result = (this.getLoanSum()
-				* (monthLoanRate + (double) monthLoanRate / (Math.pow(1 + monthLoanRate, this.getLoanDuration()) - 1)));
-		return result;
-	}
+	public abstract double calculateMonthPaymentAmount();
 
 	/**
-	 * The method returns the name of the bank in which the loan was taken
+	 * The method calculates the amount of debt remaining after payment
 	 * 
+	 * @param paymentSum
 	 * @return
 	 */
-	public abstract String getBankName();
-
-	/**
-	 * The method returns the type of loan
-	 * 
-	 * @return type of loan
-	 */
-	public abstract String getCreditType();
-
-	/**
-	 * The method checks the compliance of the entered loan repayment duration with
-	 * the restrictions set by the bank
-	 * 
-	 * @param duration
-	 * @return true if matched, false otherwise
-	 */
-	protected boolean checkLoanDurationInRange(int duration) {
-		return this.limitParameters.getMinLoanDuration() <= duration
-				&& duration <= this.limitParameters.getMaxLoanDuration();
-	}
-
-	/**
-	 * The method checks the compliance of the entered loan amount with the
-	 * restrictions set by the bank
-	 * 
-	 * @param loanSum
-	 * @return true if matched, false otherwise
-	 */
-	protected boolean checkLoanAmountInRange(double loanSum) {
-		return this.limitParameters.getMinLoanSum() <= loanSum && loanSum <= this.limitParameters.getMaxLoanSum();
-	}
+	protected abstract double calculateLoanRemainingSum(double paymentSum);
 
 	/**
 	 * The method implements a monthly payment on a loan. sumToPay cannot be less
@@ -229,18 +185,8 @@ public abstract class Credit implements Comparable<Credit> {
 	 * 
 	 * @return
 	 */
-	protected double calculatePercentPartMonthlyPayment() {
-		return this.loanSum * this.loanRate / Credit.YEAR_TO_MONTHS_COEFFICIENT;
-	}
-
-	/**
-	 * The method calculates the amount of debt remaining after payment
-	 * 
-	 * @param paymentSum
-	 * @return
-	 */
-	protected double calculateLoanRemainingSum(double paymentSum) {
-		return this.loanSum - (paymentSum - this.loanSum * this.loanRate / Credit.YEAR_TO_MONTHS_COEFFICIENT);
+	protected final double calculatePercentPartMonthlyPayment() {
+		return this.loanSum * this.loanRate / AbstractCredit.YEAR_TO_MONTHS_COEFFICIENT;
 	}
 
 	/**
@@ -273,7 +219,7 @@ public abstract class Credit implements Comparable<Credit> {
 			information = new PaymentInformation(this.loanSum, this.paymentsNumber, this.loanRate, paymentSum,
 					percentPart, paymentBody);
 		} else {
-			this.setClose();
+			this.isOpen = false;
 			double paymentRemainderDifference = paymentSum - this.loanSum;
 			paymentBody -= paymentRemainderDifference;
 			this.loanSum = 0;
@@ -284,7 +230,7 @@ public abstract class Credit implements Comparable<Credit> {
 	}
 
 	@Override
-	public int compareTo(Credit o) {
+	public int compareTo(AbstractCredit o) {
 		int result = ((Double) this.loanRate).compareTo(o.loanRate);
 		return result;
 	}

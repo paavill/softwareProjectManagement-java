@@ -24,27 +24,27 @@ public class PaymentInformation {
 		this.loanPartPaymentAmount = loanPartPaymentAmount;
 	}
 
-	public double getLoanSum() {
+	public final double getLoanSum() {
 		return loanSum;
 	}
 
-	public int getPaymentNumber() {
+	public final int getPaymentNumber() {
 		return loanDuration;
 	}
 
-	public double getLoanRate() {
+	public final double getLoanRate() {
 		return loanRate;
 	}
 
-	public double getPercentPartPaymentAmount() {
+	public final double getPercentPartPaymentAmount() {
 		return percentPartPaymentAmount;
 	}
 
-	public double getLoanPartPaymentAmount() {
+	public final double getLoanPartPaymentAmount() {
 		return loanPartPaymentAmount;
 	}
 
-	public double getPaymentAmount() {
+	public final double getPaymentAmount() {
 		return paymentAmount;
 	}
 }

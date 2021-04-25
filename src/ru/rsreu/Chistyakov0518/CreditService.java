@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import com.prutzkow.resourcer.Resourcer;
 
-import ru.rsreu.Chistyakov0518.credits.Credit;
+import ru.rsreu.Chistyakov0518.credits.AbstractCredit;
 import ru.rsreu.Chistyakov0518.credits.PaymentInformation;
 
 /**
@@ -34,7 +34,7 @@ public class CreditService {
 	 * @param credit
 	 * @return formatted string with information
 	 */
-	public static String getFormatCreditPaymentHistory(Credit credit) {
+	public static String getFormatCreditPaymentHistory(AbstractCredit credit) {
 		PaymentInformation[] paymentHistory = credit.getPaymentHistory();
 		StringBuilder result = new StringBuilder("");
 		if (credit.getPaymentsNumber() != 0) {
@@ -64,16 +64,18 @@ public class CreditService {
 	 * @param credit
 	 * @return formatted string with information
 	 */
-	public static String getFormatCreditInformation(Credit credit) {
+	public static String getFormatCreditInformation(AbstractCredit credit) {
 		StringBuilder result = new StringBuilder();
-		result.append(Resourcer.getString("messages.output.titles.bankName")).append(credit.getBankName()).append("\n")
+		result.append(Resourcer.getString("messages.output.titles.bankName"))
+				.append(credit.getLoanProvider().getBankName()).append("\n")
 				.append(Resourcer.getString("messages.output.titles.creditType")).append(credit.getCreditType())
 				.append("\n").append(Resourcer.getString("messages.output.titles.loanDuration"))
 				.append(credit.getLoanDuration()).append("\n")
 				.append(Resourcer.getString("messages.output.titles.loanRate"))
-				.append(credit.getLoanRate() * CreditService.TO_PERCENT_CONVERT_COEFFICIENT).append(" %").append("\n")
-				.append(Resourcer.getString("messages.output.titles.loanSum")).append(credit.getLoanSum()).append("\n")
-				.append(Resourcer.getString("messages.output.titles.state")).append(credit.getState()).append("\n");
+				.append(credit.getLoanProvider().getLoanRate() * CreditService.TO_PERCENT_CONVERT_COEFFICIENT)
+				.append(" %").append("\n").append(Resourcer.getString("messages.output.titles.loanSum"))
+				.append(credit.getLoanSum()).append("\n").append(Resourcer.getString("messages.output.titles.state"))
+				.append(credit.getState()).append("\n");
 		return result.toString();
 	}
 
@@ -82,7 +84,7 @@ public class CreditService {
 	 * 
 	 * @param credits
 	 */
-	public static void sortCreditsByRate(Credit[] credits) {
+	public static void sortCreditsByRate(AbstractCredit[] credits) {
 		Arrays.sort(credits);
 	}
 
@@ -94,12 +96,12 @@ public class CreditService {
 	 * @param searchingCredit
 	 * @return required credit
 	 */
-	public static Credit searchCredit(Credit[] credits, Credit searchingCredit) {
+	public static AbstractCredit searchCredit(AbstractCredit[] credits, AbstractCredit searchingCredit) {
 		int result = Arrays.binarySearch(credits, searchingCredit);
 		if (result >= 0) {
 			return credits[result];
 		} else {
-			return Credit.NULL_CREDIT;
+			return AbstractCredit.NULL_CREDIT;
 		}
 	}
 
@@ -111,7 +113,7 @@ public class CreditService {
 	 * @param credit
 	 * @return formatted string with information
 	 */
-	public static String getAllCreditInformation(Credit credit) {
+	public static String getAllCreditInformation(AbstractCredit credit) {
 		StringBuilder result = new StringBuilder();
 		result.append(CreditService.getFormatCreditInformation(credit))
 				.append(CreditService.getFormatCreditPaymentHistory(credit));
