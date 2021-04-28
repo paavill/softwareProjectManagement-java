@@ -2,25 +2,54 @@ package ru.rsreu.Chistyakov0618.fileSystemUtils;
 
 import java.io.File;
 
+import com.prutzkow.resourcer.Resourcer;
+
 public class FolderCreator {
 
 	private FolderCreator() {
 
 	}
 
-	public static boolean createFolder(String folderPath) {
+	private static boolean create(String folderPath) {
 		File f = new File(folderPath);
-		boolean executed = f.mkdirs();
-		return executed;
+		try {
+			boolean executed = f.mkdirs();
+			return executed;
+		} catch (SecurityException e) {
+			throw new SecurityException(Resourcer.getString("files.folder.exceptions.noAccess"));
+		}
 	}
 
-	public static boolean exists(String folderPath) {
+	private static boolean exists(String folderPath) {
 		File f = new File(folderPath);
-		return f.exists();
+		try {
+			return f.exists();
+		} catch (SecurityException e) {
+			throw new SecurityException(Resourcer.getString("files.folder.exceptions.noAccess"));
+		}
 	}
 
-	public static String getFullFolderPath(String folderPath) {
+	private static String getFullPath(String folderPath) {
 		File f = new File(folderPath);
-		return f.getAbsolutePath();
+		try {
+			return f.getAbsolutePath();
+		} catch (SecurityException e) {
+			throw new SecurityException(Resourcer.getString("files.folder.exceptions.noAccess"));
+		}
+	}
+
+	public static ActResult createFolder(String folderPath) throws SecurityException {
+		ActResult result;
+		if (!FolderCreator.exists(folderPath)) {
+			if (FolderCreator.create(folderPath)) {
+				result = ActResult.CREATED;
+			} else {
+				result = ActResult.NOT_CREATED;
+			}
+		} else {
+			result = ActResult.EXISTS;
+		}
+		
+		return result.addElemenPath(FolderCreator.getFullPath(folderPath));
 	}
 }

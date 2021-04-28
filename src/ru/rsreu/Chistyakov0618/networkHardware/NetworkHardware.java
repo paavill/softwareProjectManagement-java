@@ -48,8 +48,8 @@ public class NetworkHardware implements Comparable<NetworkHardware>, Serializabl
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
-		result.append(this.description).append(" ");
 		result.append(this.macAdress).append(" ");
+		result.append(this.description).append(" ");
 		result.append(this.type.getTypeName());
 		return result.toString();
 	}
